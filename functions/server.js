@@ -1,7 +1,8 @@
 const express = require("express");
+const serverless = require('serverless-http');
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -21,7 +22,7 @@ const serviceAccount = {
 };
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const router = express.Router();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -33,7 +34,7 @@ const db = admin.firestore();
 app.use(bodyParser.json());
 
 // Endpoint para enviar una notificación a un usuario específico
-app.post("/notify", async (req, res) => {
+router.post("/notify", async (req, res) => {
   const { token, title, body } = req.body;
 
   const message = {
@@ -53,7 +54,7 @@ app.post("/notify", async (req, res) => {
 });
 
 // Endpoint para enviar notificación a todos los empleados de un rol
-app.post("/notify-role", async (req, res) => {
+router.post("/notify-role", async (req, res) => {
   const { title, body, role } = req.body;
 
   try {
@@ -91,7 +92,7 @@ app.post("/notify-role", async (req, res) => {
 });
 
 // Endpoint para enviar un mail a un usuario
-app.post("/send-mail", async (req, res) => {
+/* app.post("/send-mail", async (req, res) => {
   try {
     const { aceptacion, nombreUsuario, mail } = req.body;
     const transporter = nodemailer.createTransport({
@@ -123,8 +124,8 @@ app.post("/send-mail", async (req, res) => {
       seEnvio: false,
     });
   }
-});
+}); */
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.use('/.netlify/functions/server', router);
+
+module.exports.handler = serverless(app);

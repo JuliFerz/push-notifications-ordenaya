@@ -1,7 +1,2 @@
 [build]
-  command = "npm install"
-  publish = "/"
-
-[functions]
-  directory = "."
-  included_files = ["netlify-lambda.js"]
+  functions = "functions"
