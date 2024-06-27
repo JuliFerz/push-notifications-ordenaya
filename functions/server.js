@@ -3,7 +3,7 @@ const serverless = require('serverless-http');
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 // const nodemailer = require("nodemailer");
-const cors = require("cors"); // Importa el paquete cors
+const cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
