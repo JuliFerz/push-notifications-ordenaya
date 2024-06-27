@@ -57,14 +57,14 @@ router.post("/notify", async (req, res) => {
 });
 
 // Endpoint para enviar notificación a todos los empleados de un rol
-router.post("/notify-role", async (req, res) => {
-  const { title, body, role } = req.body;
+router.post("/notify-profile", async (req, res) => {
+  const { title, body, profile, data } = req.body;
 
   try {
     const employeeTokens = [];
     const querySnapshot = await db
       .collection("users")
-      .where("role", "==", role)
+      .where("profile", "==", profile)
       .get();
     querySnapshot.forEach((doc) => {
       const data = doc.data();
@@ -84,6 +84,7 @@ router.post("/notify-role", async (req, res) => {
         title: title,
         body: body,
       },
+      data: data ? data : {},
       tokens: employeeTokens,
     };
 
