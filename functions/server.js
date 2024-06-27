@@ -39,10 +39,10 @@ router.post("/notify", async (req, res) => {
 
   const message = {
     notification: {
-      title,
-      body,
-      data: data ? data : {},
+      title: title,
+      body: body,
     },
+    data: data ? data : {},
     token: token,
   };
 
