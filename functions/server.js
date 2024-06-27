@@ -35,12 +35,13 @@ app.use(bodyParser.json());
 
 // Endpoint para enviar una notificación a un usuario específico
 router.post("/notify", async (req, res) => {
-  const { token, title, body } = req.body;
+  const { token, title, body, data } = req.body;
 
   const message = {
     notification: {
-      title: title,
-      body: body,
+      title,
+      body,
+      data: data ? data : {},
     },
     token: token,
   };
