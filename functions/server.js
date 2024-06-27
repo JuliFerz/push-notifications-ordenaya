@@ -3,6 +3,7 @@ const serverless = require('serverless-http');
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 // const nodemailer = require("nodemailer");
+const cors = require("cors"); // Importa el paquete cors
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -31,6 +32,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
+app.use(cors()); 
 app.use(bodyParser.json());
 
 // Endpoint para enviar una notificación a un usuario específico
