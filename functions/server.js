@@ -89,9 +89,9 @@ router.post("/notify-profile", async (req, res) => {
     };
 
     const response = await admin.messaging().sendEachForMulticast(message);
-    res.status(200).send(`Mensajes enviados: ${response.successCount}`);
+    res.status(200).send(`{'mensajes_enviados': ${response.successCount}}`);
   } catch (error) {
-    res.status(500).send(`Error al enviar mensaje: ${error}`);
+    res.status(500).send(`{err_msg: Error al enviar mensaje - ${error}}`);
   }
 });
 
